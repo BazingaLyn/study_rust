@@ -10,5 +10,5 @@ pub(crate) trait Comparator: Send + Sync + Default + Clone {
     fn separator(&self, a: &[u8], b: &[u8]) -> Vec<u8>;
 
 
-    fn successors(&self, a: &[u8], b: &[u8]) -> Vec<u8>;
+    fn successors(&self, key: &[u8]) -> Vec<u8>;
 }

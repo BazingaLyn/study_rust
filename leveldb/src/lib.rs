@@ -13,3 +13,4 @@ mod version;
 mod compaction;
 mod mem;
 mod cache;
+mod filter;

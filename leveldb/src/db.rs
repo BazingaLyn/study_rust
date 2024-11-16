@@ -1,8 +1,8 @@
 use std::collections::VecDeque;
 use std::sync::{Arc, Condvar, Mutex, RwLock};
 use std::sync::atomic::AtomicBool;
-use std::sync::mpsc::{Receiver, Sender};
 use crossbeam::sync::ShardedLock;
+use crossbeam_channel::{Receiver, Sender};
 use crate::batch::WriteBatch;
 use crate::compaction::ManualCompaction;
 use crate::db_builder::InternalKeyComparator;
@@ -94,15 +94,16 @@ impl<S: Storage + Clone + 'static, C: Comparator + 'static> DBImpl<S, C> {
             table_cache: TableCache::new(
                 db_path.clone(),
                 o.clone(),
-                o.tab
-
+                o.table_cache_size(),
+                storage.clone(),
             ),
-            version: VersionSet {},
-            manual_compaction_queue: Mutex::new(Default::default()),
-            background_work_finish_signal: Default::default(),
-            background_compaction_scheduled: Default::default(),
-            db_compaction: ((), ()),
-            mem: (),
+            //TODO
+            version: VersionSet::new(),
+            manual_compaction_queue: Mutex::new(VecDeque::new()),
+            background_work_finish_signal: Condvar::new(),
+            background_compaction_scheduled: AtomicBool::new(false),
+            db_compaction: crossbeam_channel::unbounded(),
+            mem: ShardedLock::new(MemTable::n),
             im_mem: (),
             bg_error: Default::default(),
             is_shutting_down: Default::default(),
