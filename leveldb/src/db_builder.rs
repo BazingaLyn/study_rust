@@ -1,6 +1,6 @@
 use std::cmp::Ordering;
-use crate::leveldb::utils::coding::decode_fixed_64;
-use crate::leveldb::utils::comparators::Comparator;
+use crate::utils::coding::decode_fixed_64;
+use crate::utils::comparators::Comparator;
 
 
 pub const INTERNAL_KEY_SIZE: usize = 8;

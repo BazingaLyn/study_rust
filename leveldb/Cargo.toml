@@ -6,4 +6,6 @@ edition = "2021"
 [dependencies]
 crossbeam = "0.8.4"
 crossbeam-utils = "0.8.20"
+num-derive = "0.4.2"
+num-traits = "0.2.19"
 quick-error = "2.0.1"

@@ -1,4 +1,4 @@
-use crate::leveldb::error::Result;
+use crate::error::Result;
 pub trait Storage: Send + Sync {
 
     type F: File + 'static;

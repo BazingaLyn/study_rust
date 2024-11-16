@@ -12,3 +12,4 @@ mod sstable;
 mod version;
 mod compaction;
 mod mem;
+mod cache;
